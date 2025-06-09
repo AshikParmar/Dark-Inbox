@@ -8,9 +8,9 @@ export async function sendVerificationEmail(email: string, username: string, ver
     try {
         const { data, error } = await resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: email,
+        to: "ashikparmar5123@gmail.com",
         subject: 'Dark Inbox | Verification Code',
-        react: VerificationEmail( {username, otp: verifyCode} ),
+        react: VerificationEmail( {email , username, otp: verifyCode} ),
         });
 
         if (error) {
