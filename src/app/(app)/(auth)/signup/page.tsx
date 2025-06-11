@@ -59,7 +59,7 @@ const page = () => {
             const response = await axios.post<ApiResponse>("/api/sign-up", data);
 
             if (response.data.success) {
-                toast(response.data.message);
+                toast.success(response.data.message);
                 router.replace(`/verify/${username}`);
             }
         } catch (error) {
@@ -67,14 +67,14 @@ const page = () => {
             const axiosError = error as AxiosError<ApiResponse>
             const errorMessage = axiosError.response?.data.message;
 
-            toast(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setIsSubmitting(false);
         }
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-800">
+        <div className="flex flex-grow justify-center items-center bg-gray-800">
             <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">

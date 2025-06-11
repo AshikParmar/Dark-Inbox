@@ -23,23 +23,24 @@ export async function GET(request: Request) {
 
     try {
          const user = await UserModel.aggregate([
-            { $match: {id: userId} },
+            { $match: {_id: userId} },
             { $unwind: "$messages" },
             { $sort: {"messages.createdAt": -1} },
             { $group: { _id: "$_id", messages: {$push: "$messages"}} }
          ])
+        //  console.log("user",user)
 
          if(!user || user.length===0){
             return Response.json({
                 success: false,
-                message: "User not found"
+                message: "No messages found"
             }, { status: 404 });
          }
 
         return Response.json({
             success: true,
             messages: user[0].messages
-        }, { status: 401 });
+        }, { status: 201 });
 
     } catch (error) {
         console.error("Error in getting messages: ", error);
