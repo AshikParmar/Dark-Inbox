@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel, { Message } from "@/model/userModel";
-
+import { sendMessage } from "@/lib/sse";
 
 export async function POST(request: Request) {
     await dbConnect();
@@ -27,6 +27,9 @@ export async function POST(request: Request) {
 
         user.messages.push(newMessage as Message);
         await user.save();
+
+        const savedMessage = user.messages[user.messages.length - 1];
+        sendMessage(username, savedMessage);
 
         return Response.json({
             success: true,
